@@ -102,8 +102,7 @@ public class NonBlockingServer {
 		System.out.println("클라이언트 연결됨 : "+ socketChannel.getRemoteAddress());
 		
 		keepDataTrack.put(socketChannel, new ArrayList<byte[]>());//연결시 해당 연결된 클라이언트 정보를 등록함 
-		socketChannel.register(selector, SelectionKey.OP_READ);//17. 클라이언트 소켓 채널을 Selector에 OP_Read 타입으로 등록 등록하여 I/O 이벤트를 감시한다.
-		
+		socketChannel.register(selector, SelectionKey.OP_READ);//17. 클라이언트 소켓 채널을 Selector에 OP_Read 타입으로 등록 등록하여 I/O 이벤트를 감시한다.		
 		
 	}
 
