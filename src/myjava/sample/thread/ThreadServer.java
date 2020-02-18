@@ -7,17 +7,20 @@ package myjava.sample.thread;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
  * @author juhyeon
- * @biref 
+ * @biref 간단한 블로킹서버 클라이언트가 요청할때마다 새로운 스레드가 생성된다. 
  * @details 
  * @date 
  * @version
  * 
  */
 public class ThreadServer {
+	static Map<String, Socket> socketMap = new HashMap<String, Socket>();
 	
 	public static void main(String[] args) throws IOException {
 		ServerSocket server = new ServerSocket(9898);
