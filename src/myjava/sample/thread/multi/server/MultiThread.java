@@ -2,7 +2,7 @@
  * @brief
  * @Detail
  */
-package myjava.sample.thread.broadcast;
+package myjava.sample.thread.multi.server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,15 +12,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.Writer;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
+import myjava.sample.thread.broadcast.BroadCastServer;
 
 /**
  * @author juhyeon
@@ -30,26 +24,25 @@ import java.util.Set;
  * @version
  * 
  */
-public class BroadResponseThread extends Thread{
-	private Socket socket;
+public class MultiThread extends Thread{
+	private Socket socket; 
 	private InputStream in;
 	private InputStreamReader isr;
 	private OutputStreamWriter osw;
 	private OutputStream out;
 	private BufferedReader br;
 	private PrintWriter pw;
-	private BroadCastServer broadCastServer;
+	private MultiServer mutiServer;		
+	
 	/**
-	 * @throws IOException 
 	 * @brief
 	 * @Detail
 	 */
-	public BroadResponseThread(Socket socket,BroadCastServer broadCastServer) throws IOException {
-		this.socket = socket;
-		this.broadCastServer = broadCastServer;
+	public MultiThread(Socket socket, MultiServer multiServer) {
+		this.socket = socket; 
+		this.mutiServer = multiServer;
 		System.out.println(socket.getInetAddress());
-		System.out.println(socket.getLocalAddress());
-		System.out.println(socket.getPort());
+		System.out.println(socket.getPort());		
 		
 		try {
 			//소켓에서 메시지를 가져옴
@@ -60,37 +53,33 @@ public class BroadResponseThread extends Thread{
 			e.printStackTrace();
 		}
 	}
-	
+
+	@Override
+	public synchronized void run(){
+		String msg = null;
+		try {	
+			while(((msg=br.readLine())!=null)){
+				//int roof =Integer.parseInt(msg);
+				
+				mutiServer.sendCount++;
+				System.out.println( socket.getPort()+ ":"+ mutiServer.sendCount + ":"+msg);			
+				mutiServer.loging(msg,socket,this);
+			   
+			}						
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(socket.getInetAddress()+":"+socket.getPort()+"연결 종료");
+		}
+	}
+
+
+
 	/**
 	 * @brief
 	 * @details
 	 */
-	public void sendMessage(String msg) {
-		System.out.println("send : "+ msg);
+	public void sendMessage(String msg) {//서버의 처리결과를 입력받는다.
 		pw.println(msg);
-		//pw.flush();
 	}
-	
-	/**
-	 * @brief
-	 * @Detail
-	 */	
-	@Override
-	public void run() {
-		String msg = null;	
-		try {
-			while(((msg=br.readLine())!=null)){
-				System.out.println("BoroadCasting");
-				broadCastServer.broadCasting(msg);
-			}
-		} catch (IOException e) {
-			System.out.println(socket.getInetAddress()+":"+socket.getPort()+"연결 종료");
-			broadCastServer.remove(this);
-		}finally {
-			pw.close();
-		}
-	}
-	
-	
 	
 }

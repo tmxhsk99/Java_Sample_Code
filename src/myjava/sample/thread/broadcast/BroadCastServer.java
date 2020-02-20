@@ -23,15 +23,11 @@ import java.util.Map;
  * 
  */
 public class BroadCastServer {
-	private List<BroadResponseThread> userthread =  Collections.synchronizedList(new ArrayList<BroadResponseThread>()); 
-	
-	
+	private List<BroadResponseThread> userthread =  Collections.synchronizedList(new ArrayList<BroadResponseThread>());	
 	
 	public BroadCastServer() {
 		userthread.clear();
 	}
-
-
 
 	public BroadCastServer(BroadResponseThread thread) {
 		userthread.add(thread);		
@@ -56,7 +52,7 @@ public class BroadCastServer {
 	int port = 9898;
 	
 	/**
-	 * @brief
+	 * @brief 
 	 * @details
 	 */
 	private void start() {
@@ -68,7 +64,7 @@ public class BroadCastServer {
 				Socket socket = serverSocket.accept();
 				BroadResponseThread broadResponseThread = new BroadResponseThread(socket,this);
 				add(broadResponseThread);
-				broadResponseThread.start();
+				broadResponseThread.start();				
 			}
 		} catch (IOException e) {			
 			e.printStackTrace();
@@ -88,12 +84,12 @@ public class BroadCastServer {
 	 * @details
 	 */
 	synchronized void add(BroadResponseThread broadResponseThread) {
-		userthread.add(broadResponseThread);
-		
+		userthread.add(broadResponseThread);	
 	}
+	
 	/**
 	 * @brief
-	 * @details
+	 * @details 
 	 */
 	synchronized void remove(BroadResponseThread broadResponseThread) {
 		userthread.remove(broadResponseThread);		
