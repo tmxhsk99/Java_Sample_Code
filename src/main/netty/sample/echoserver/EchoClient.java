@@ -35,7 +35,7 @@ public class EchoClient {
 					p.addLast(new EchoClientHandler());
 				}
 			});
-			ChannelFuture f = b.connect("localhost",9999).sync();//4.비동키 입출력 메서드인  connect 를 호출한다. 
+			ChannelFuture f = b.connect("localhost",9898).sync();//4.비동키 입출력 메서드인  connect 를 호출한다. 
 			//connect 메서드 호출 결과로 ChannelFuture 객체를 돌려주는데 이 객체를 통해서 비동기 메서드 처리결과를 확인 할 수 있다. 
 			//ChannelFuture 객체의 sync  메서드는  ChannelFuture 객체의 요청이 완료 될 때까지 대기하낟.
 			// 단 요청이 실패하면 예외를 던진다. connect메서드 처리가 완료될때까지 다음 라인으로 진행하지 않는다. 

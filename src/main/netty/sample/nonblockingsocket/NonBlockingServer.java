@@ -34,7 +34,7 @@ public class NonBlockingServer {
 	private void startEchoServer(){
 		try (//1.자바 1.7에서 등장한 기능 , 소괄호에서 선언된자원을 자동으로 해제해준다 . 1.6이하에서는 finnaly 구문에서 해제 필요 
 			Selector selector = Selector.open();
-				//2.자바NIO 컴포넌트 중의 하나인 Selector는 자신에게 등록된 채널에 변경 사항이 발생했는지 검사하고 변경 사항이 발생한 채널에 대한 접근을 가능하게 해준다.
+				//2. 자바NIO 컴포넌트 중의 하나인 Selector는 자신에게 등록된 채널에 변경 사항이 발생했는지 검사하고 변경 사항이 발생한 채널에 대한 접근을 가능하게 해준다.
 				//여기서는 새로운 selector 객체를 생성
 			ServerSocketChannel serverSocketChannel = ServerSocketChannel.open()
 					//3. 블로킹소켓의 ServerSocket에 대응되는 논블로킹 소켓의 서버소켓 채널을 생성한다. 
